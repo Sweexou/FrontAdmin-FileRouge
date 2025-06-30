@@ -1,10 +1,11 @@
 <script lang="ts">
   import FilterPanel from '../components/FilterPanel.svelte';
 
-   interface Props {
-    setCurrentPage: (page: 'users' | 'questionnaires') => void;
+  interface Props {
+    setCurrentPage: (page: 'users' | 'questionnaires' | 'userDetail') => void;
+    setSelectedUser: (user: User) => void;
   }
-  let { setCurrentPage }: Props = $props();
+  let { setCurrentPage, setSelectedUser }: Props = $props();
 
   type User = {
     uuid: string;
@@ -227,6 +228,18 @@
     }
   });
 
+  function selectUser(user: User) {
+    // Ajout des données manquantes
+    const completeUser = {
+      ...user,
+      username: user.name,
+      email: `${user.name.toLowerCase().replace(' ', '.')}@example.com`,
+      lastConnection: '2024-06-29'
+    };
+    setSelectedUser(completeUser);
+    setCurrentPage('userDetail');
+  }
+
   function sortTable(key: keyof User) {
     if (key === 'uuid') return;
     
@@ -306,8 +319,8 @@
       </thead>
 
       <tbody>
-        {#each paginatedUsers as user}
-          <tr>
+        {#each paginatedUsers as user (user.uuid)}
+          <tr onclick={() => selectUser(user)} class="clickable-row">
             <td class="uuid-col">
               <span class="uuid-text">{user.uuid}</span>
             </td>
@@ -425,6 +438,17 @@
   .nav-item:focus {
     outline: 2px solid #2154a2;
     outline-offset: -2px;
+  }
+
+  .clickable-row {
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .clickable-row:hover {
+    background: #f0f6fd !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(33,84,162,0.1);
   }
 
   main {

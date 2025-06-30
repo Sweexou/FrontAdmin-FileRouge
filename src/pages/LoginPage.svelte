@@ -1,6 +1,12 @@
 <script lang="ts">
   import LoginForm from '../components/LoginForm.svelte';
-  export let onLogin: () => void;
+  
+  // Correction pour Svelte 5
+  interface Props {
+    onLogin: () => void;
+  }
+
+  let { onLogin }: Props = $props();
 </script>
 
 <div class="container">
@@ -21,5 +27,3 @@
     justify-content: center;
   }
 </style>
-
-

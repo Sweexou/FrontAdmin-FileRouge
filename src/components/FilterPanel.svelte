@@ -1,4 +1,21 @@
 <script lang="ts">
+  // Correction pour Svelte 5 - Définir l'interface Props
+  interface Props {
+    filterName?: string;
+    filterDateType?: string;
+    filterDate?: string;
+    filterScoreType?: string;
+    filterScoreMin?: string;
+    filterScoreMax?: string;
+    filterRankType?: string;
+    filterRankMin?: string;
+    filterRankMax?: string;
+    usersPerPage?: number;
+    currentPage?: number;
+    resultCount?: number;
+    totalPages?: number;
+  }
+
   let {
     filterName = $bindable(''),
     filterDateType = $bindable('any'),
@@ -13,7 +30,7 @@
     currentPage = $bindable(1),
     resultCount = 0,
     totalPages = 0
-  } = $props();
+  }: Props = $props();
 
   function clearFilters() {
     filterName = '';
@@ -42,12 +59,10 @@
     if (currentPage > 1) currentPage--;
   }
 
-  // Reset to page 1 when changing users per page
   function handleUsersPerPageChange() {
     currentPage = 1;
   }
 </script>
-
 <div class="filter-panel">
   <div class="filter-header">
     <h3>Filtres</h3>

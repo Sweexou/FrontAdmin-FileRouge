@@ -2,24 +2,43 @@
   import LoginPage from './pages/LoginPage.svelte';
   import TablePage from './pages/TablePage.svelte';
   import QuestionnaireTable from './pages/QuestionnaireTable.svelte';
+  import UserDetail from './pages/UserDetail.svelte';
+
+  type User = {
+    uuid: string;
+    classement: number;
+    name: string;
+    creation: string;
+    score: number;
+    username?: string;
+    email?: string;
+    lastConnection?: string;
+  };
 
   let isLoggedIn: boolean = false;
-  let currentPage: 'users' | 'questionnaires' = 'users';
+  let currentPage: 'users' | 'questionnaires' | 'userDetail' = 'users';
+  let selectedUser: User | null = null;
 
   function handleLogin(): void {
     isLoggedIn = true;
   }
 
-  function setCurrentPage(page: 'users' | 'questionnaires'): void {
+  function setCurrentPage(page: 'users' | 'questionnaires' | 'userDetail'): void {
     currentPage = page;
+  }
+
+  function setSelectedUser(user: User | null): void {
+    selectedUser = user;
   }
 </script>
 
 {#if isLoggedIn}
   {#if currentPage === 'users'}
-    <TablePage {setCurrentPage} />
+    <TablePage {setCurrentPage} {setSelectedUser} />
   {:else if currentPage === 'questionnaires'}
-    <QuestionnaireTable {setCurrentPage} />
+    <QuestionnaireTable {setCurrentPage} {setSelectedUser} />
+  {:else if currentPage === 'userDetail'}
+    <UserDetail {setCurrentPage} {selectedUser} {setSelectedUser} />
   {/if}
 {:else}
   <LoginPage onLogin={handleLogin} />
