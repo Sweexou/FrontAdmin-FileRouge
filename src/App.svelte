@@ -1,19 +1,31 @@
 <script lang="ts">
   import LoginPage from './pages/LoginPage.svelte';
   import TablePage from './pages/TablePage.svelte';
+  import QuestionnaireTable from './pages/QuestionnaireTable.svelte';
 
-  let isLoggedIn = false;
+  let isLoggedIn: boolean = false;
+  let currentPage: 'users' | 'questionnaires' = 'users';
 
-  function handleLogin() {
+  function handleLogin(): void {
     isLoggedIn = true;
+  }
+
+  function setCurrentPage(page: 'users' | 'questionnaires'): void {
+    currentPage = page;
   }
 </script>
 
 {#if isLoggedIn}
-  <TablePage />
+  {#if currentPage === 'users'}
+    <TablePage {setCurrentPage} />
+  {:else if currentPage === 'questionnaires'}
+    <QuestionnaireTable {setCurrentPage} />
+  {/if}
 {:else}
   <LoginPage onLogin={handleLogin} />
 {/if}
+
+
 
 <style>
   :global(html, body) {

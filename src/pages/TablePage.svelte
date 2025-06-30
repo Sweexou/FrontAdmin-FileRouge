@@ -1,6 +1,11 @@
 <script lang="ts">
   import FilterPanel from '../components/FilterPanel.svelte';
 
+   interface Props {
+    setCurrentPage: (page: 'users' | 'questionnaires') => void;
+  }
+  let { setCurrentPage }: Props = $props();
+
   type User = {
     uuid: string;
     classement: number;
@@ -236,8 +241,26 @@
 
 <header>
   <nav>
-    <span class="nav-item active">Users</span>
-    <span class="nav-item">Stats</span>
+    <button 
+      type="button" 
+      class="nav-item active" 
+      onclick={() => setCurrentPage('users')}
+    >
+      Users
+    </button>
+    <button 
+      type="button" 
+      class="nav-item" 
+      onclick={() => setCurrentPage('questionnaires')}
+    >
+      Questionnaires
+    </button>
+    <button 
+      type="button" 
+      class="nav-item"
+    >
+      Stats
+    </button>
   </nav>
 </header>
 
@@ -379,6 +402,16 @@
     border-bottom: 2.5px solid transparent;
     cursor: pointer;
     transition: all 0.2s;
+    white-space: nowrap;
+    
+    background: none;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    font-size: 1.1rem;
+    font-family: inherit;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   .nav-item.active {
@@ -387,6 +420,11 @@
 
   .nav-item:hover {
     background: rgba(33, 84, 162, 0.05);
+  }
+
+  .nav-item:focus {
+    outline: 2px solid #2154a2;
+    outline-offset: -2px;
   }
 
   main {
