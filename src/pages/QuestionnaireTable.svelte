@@ -3,10 +3,11 @@
 
   // Correction pour Svelte 5
   interface Props {
-    setCurrentPage: (page: 'users' | 'questionnaires') => void;
+    setCurrentPage: (page: 'users' | 'questionnaires' | 'userDetail' | 'stats') => void;
+    setSelectedUser: (user: any) => void;
   }
 
-  let { setCurrentPage }: Props = $props();
+  let { setCurrentPage, setSelectedUser  }: Props = $props();
 
   type Questionnaire = {
     uuid: string;
@@ -145,12 +146,14 @@
     </button>
     <button 
       type="button" 
-      class="nav-item"
+      class="nav-item" 
+      onclick={() => setCurrentPage('stats')}
     >
       Stats
     </button>
   </nav>
 </header>
+
 
 <main>
   <div class="table-container">

@@ -1,6 +1,6 @@
 <script lang="ts">
   interface Props {
-    setCurrentPage: (page: 'users' | 'questionnaires' | 'userDetail') => void;
+    setCurrentPage: (page: 'users' | 'questionnaires' | 'userDetail' | 'stats') => void;
     selectedUser: User | null;
     setSelectedUser: (user: User | null) => void;
   }
@@ -58,7 +58,8 @@
     </button>
     <button 
       type="button" 
-      class="nav-item"
+      class="nav-item" 
+      onclick={() => setCurrentPage('stats')}
     >
       Stats
     </button>
@@ -344,7 +345,7 @@
     border-radius: 50%;
     font-weight: bold;
     font-size: 1.1rem;
-    }
+  }
 
   @media (max-width: 768px) {
     .detail-container {

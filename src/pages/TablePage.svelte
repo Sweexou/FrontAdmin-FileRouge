@@ -2,7 +2,7 @@
   import FilterPanel from '../components/FilterPanel.svelte';
 
   interface Props {
-    setCurrentPage: (page: 'users' | 'questionnaires' | 'userDetail') => void;
+    setCurrentPage: (page: 'users' | 'questionnaires' | 'userDetail' | 'stats') => void;
     setSelectedUser: (user: User) => void;
   }
   let { setCurrentPage, setSelectedUser }: Props = $props();
@@ -270,12 +270,14 @@
     </button>
     <button 
       type="button" 
-      class="nav-item"
+      class="nav-item" 
+      onclick={() => setCurrentPage('stats')}
     >
       Stats
     </button>
   </nav>
 </header>
+
 
 <main>
   <div class="table-container">
